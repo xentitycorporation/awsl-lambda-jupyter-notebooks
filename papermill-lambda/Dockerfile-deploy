@@ -1,0 +1,20 @@
+FROM lambci/lambda:build-python3.8
+
+ENV IPYTHONDIR '/tmp/ipythondir'
+
+USER root
+RUN yum update -y
+RUN yum install -y git-all
+RUN rm -rf /var/cache/yum
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt -t . && \
+  cp -r /var/lang/bin .
+
+ENV PYTHONPATH='/var/task'
+
+COPY . .
+
+CMD  cat .lambdaignore | xargs zip -9qyr lambda.zip . -x && \
+        aws s3 cp lambda.zip s3://nb-scripts/zipfile/whisper-lambda.zip && \
+        aws lambda update-function-code --function-name papermill-lambda --s3-bucket nb-scripts --s3-key zipfile/papermill-lambda.zip
