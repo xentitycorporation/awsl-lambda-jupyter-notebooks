@@ -1,7 +1,6 @@
 # Running Jupyter Notebooks Using papermill Deployed to AWS Lambda
 Assumptions:
 * The current requirements.txt file contains papermill, pandas, numpy, ipykernel, jupyter. If the notebook needs other packages, they can be added there.
-* There already is an s3 bucket called `nb-scripts` within your specified region.
 * A function already exists. If not then the function can be created using the CLI tool and command shown [here](https://docs.aws.amazon.com/cli/latest/reference/lambda/create-function.html) or was created through the AWS console.
 
 ### Prerequisites
