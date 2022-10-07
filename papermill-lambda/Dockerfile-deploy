@@ -1,5 +1,6 @@
 FROM lambci/lambda:build-python3.8
 
+ARG bucket
 ENV IPYTHONDIR '/tmp/ipythondir'
 
 USER root
@@ -16,5 +17,5 @@ ENV PYTHONPATH='/var/task'
 COPY . .
 
 CMD  cat .lambdaignore | xargs zip -9qyr lambda.zip . -x && \
-        aws s3 cp lambda.zip s3://nb-scripts/zipfile/whisper-lambda.zip && \
-        aws lambda update-function-code --function-name papermill-lambda --s3-bucket nb-scripts --s3-key zipfile/papermill-lambda.zip
+        aws s3 cp lambda.zip s3://$bucket/zipfile/papermill-lambda.zip && \
+        aws lambda update-function-code --function-name papermill-lambda --s3-bucket $bucket --s3-key zipfile/papermill-lambda.zip
