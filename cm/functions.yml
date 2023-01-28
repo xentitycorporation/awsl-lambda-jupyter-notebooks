@@ -1,0 +1,19 @@
+downloadSource:
+  handler: downloadSource/app.handler
+  name: ${self:provider.stage}-downloadSource
+  description: lambda that streams a data source from a URL to S3
+  memorySize: 2048
+  timeout: 900
+  package:
+    include:
+      - downloadSource/app.py
+      - downloadSource/lib/*
+  environment:
+    REGION: ${self:provider.region}
+    STAGE: ${self:provider.stage}
+    DESTINATION_BUCKET: ${self:custom.environment.DESTINATION_BUCKET}
+  # alarms:
+  #   - functionAllFailures
+  #   - functionErrors
+  #   - name: functionDuration
+  #     threshold: 240000

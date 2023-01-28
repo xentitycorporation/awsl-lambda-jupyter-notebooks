@@ -1,0 +1,40 @@
+service: xentity-infrastructure-lambdas
+frameworkVersion: ">=2.72.3"
+plugins:
+  - serverless-python-requirements
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  stage: ${opt:stage, 'stg'}
+  region: ${opt:region, 'us-east-1'}
+  deploymentBucket:
+    name: ${self:custom.environment.DEPLOYMENT_BUCKET}
+    blockPublicAccess: true
+    maxPreviousDeploymentArtifacts: 3
+  stackName: ${self:provider.stage}-${self:service}
+  stackPolicy:
+    - Effect: Allow
+      Principal: "*"
+      Action: "Update:*"
+      Resource: "*"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "s3:PutObject"
+          Resource: arn:aws:s3:::${self:custom.environment.DESTINATION_BUCKET}/*
+package:
+  individually: true
+  exclude:
+    - '**/*'
+custom:
+  environment: ${file(./cm/environment.yml):${self:provider.stage}}
+  namespace: XentityDemos
+  namespaceShort: XEN
+  pythonRequirements:
+    dockerizePip: true
+    invalidateCaches: true
+    slim: true
+functions: ${file(./cm/functions.yml)}
