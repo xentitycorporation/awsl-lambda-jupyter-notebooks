@@ -1,9 +1,6 @@
 # demo-serverless-python-lambda
 Serverless Framework Demo for a Python Lambda deployment that showcases how to organize, test, and deploy a project.
 
-# Design Document
-![Basic Diagram](assets/images/diagram01.png)
-
 # AWS Profile
 For xentity users you can setup your profile by contacting the TECH Track for credentials and Access to AWS.
 

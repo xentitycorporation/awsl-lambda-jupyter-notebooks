@@ -1,0 +1,11 @@
+{
+    "notebook": "testing.ipynb",
+    "bucket": "nb-scripts",
+    "key": "output",
+    "output": "juptest_output.ipynb",
+    "offset": 0,
+    "batch_size": 20,
+    "csv_file": "mrds.csv",
+    "secret_name" : "stg/usgs-agol",
+    "region" : "us-east-1"
+}

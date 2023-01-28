@@ -1,4 +1,7 @@
-import json
+"""
+Lambda that executes Jupyter Notebooks and saves executed outputs back to s3.
+"""
+import tempfile
 import boto3
 import papermill as pm
 import logging
@@ -7,12 +10,26 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
-    s3 = boto3.resource('s3')
-    s3.meta.client.download_file('nb-scripts', 'testing.ipynb', '/tmp/test.ipynb')
-    pm.execute_notebook('/tmp/test.ipynb', '/tmp/juptest_output.ipynb', kernel_name='python3')
-    s3.meta.client.upload_file('/tmp/juptest_output.ipynb', 'nb-scripts', 'output/juptest_output.ipynb')
-    logger.info(event)
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
+    """
+    Main lambda handler.
+    """
+    notebook = event['notebook']
+    bucket = event['bucket']
+    key = event['key']
+    output = event['output']
+    tmp = tempfile.gettempdir()
+    s3_client = boto3.resource('s3')
+    params = {
+        'offset': event['offset'],
+        'batch_size': event['batch_size'],
+        'bucket': bucket,
+        'csv_file': event['csv_file']
     }
+    s3_client.meta.client.download_file(bucket, notebook, f'{tmp}/{notebook}')
+    pm.execute_notebook(
+        f'{tmp}/{notebook}',
+        f's3://{bucket}/{output}',
+        kernel_name='python3',
+        parameters=params
+        )
+    s3_client.meta.client.upload_file(f'{tmp}/{output}', bucket, f'{key}/{output}')

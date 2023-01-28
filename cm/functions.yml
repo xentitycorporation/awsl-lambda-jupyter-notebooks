@@ -12,6 +12,20 @@ downloadSource:
     REGION: ${self:provider.region}
     STAGE: ${self:provider.stage}
     DESTINATION_BUCKET: ${self:custom.environment.DESTINATION_BUCKET}
+papermill-lambda:
+  handler: papermill-lambda/app.handler
+  name: ${self:provider.stage}-papermill-lambda
+  description: lambda executes Jupyter Notebooks
+  memorySize: 2048
+  timeout: 900
+  package:
+    include:
+      - papermill-lambda/app.py
+      - papermill-lambda/lib/*
+  environment:
+    REGION: ${self:provider.region}
+    STAGE: ${self:provider.stage}
+    DESTINATION_BUCKET: ${self:custom.environment.DESTINATION_BUCKET}
   # alarms:
   #   - functionAllFailures
   #   - functionErrors
