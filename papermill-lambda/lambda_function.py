@@ -1,13 +1,18 @@
 """
 Lambda that executes Jupyter Notebooks and saves executed outputs back to s3.
 """
+import os
 import tempfile
+import logging
+from dotenv import load_dotenv
 import boto3
 import papermill as pm
-import logging
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
+load_dotenv()
+print(os.environ["AWS_PROFILE"])
 
 def lambda_handler(event, context):
     """
