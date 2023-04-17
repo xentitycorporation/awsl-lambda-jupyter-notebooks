@@ -1,10 +1,10 @@
-service: xentity-infrastructure-lambdas
+service: xentity-awsl-jupyter-notebooks
 frameworkVersion: ">=2.72.3"
 plugins:
   - serverless-python-requirements
 provider:
   name: aws
-  runtime: python3.8
+  runtime: python3.9
   lambdaHashingVersion: 20201221
   stage: ${opt:stage, 'stg'}
   region: ${opt:region, 'us-east-1'}
@@ -24,17 +24,21 @@ provider:
         - Effect: Allow
           Action:
             - "s3:PutObject"
-          Resource: arn:aws:s3:::${self:custom.environment.DESTINATION_BUCKET}/*
+            - "s3:GetObject"
+            - "s3:ListAllMyBuckets"
+            - "secretsmanager:GetSecretValue"
+            - "lambda:InvokeFunction"
+          Resource: "*"
 package:
   individually: true
   exclude:
     - '**/*'
 custom:
   environment: ${file(./cm/environment.yml):${self:provider.stage}}
-  namespace: XentityDemos
-  namespaceShort: XEN
+  namespace: PapermillDemo
+  namespaceShort: PDemo
   pythonRequirements:
-    dockerizePip: true
+    dockerizePip: non-linux
     invalidateCaches: true
     slim: true
 functions: ${file(./cm/functions.yml)}

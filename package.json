@@ -6,7 +6,7 @@
     "prd:deploy": "serverless deploy --verbose --stage prd --region us-east-1 --aws-profile xentity",
     "prd:destroy": "echo serverless remove --verbose --stage prd --region us-east-1 --aws-profile xentity",
     "stg:deploy": "serverless deploy --verbose --stage stg --region us-east-1 --aws-profile xentity",
-    "stg:destroy": "echo serverless remove --verbose --stage stg --region us-east-1 --aws-profile xentity",
+    "stg:destroy": "serverless remove --verbose --stage stg --region us-east-1 --aws-profile xentity",
     "local:downloadsource": "cd downloadSource && pipenv run python local.py --event events/test01.json",
     "test:downloadsource": "serverless invoke local -f downloadSource -p downloadSource/events/test01.json",
     "stg:test:downloadsource": "aws lambda invoke --function-name stg-downloadSource --cli-binary-format raw-in-base64-out --payload file://downloadSource/events/test01.json response.json --profile xentity",

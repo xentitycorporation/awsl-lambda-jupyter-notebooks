@@ -1,33 +1,12 @@
-downloadSource:
-  handler: downloadSource/app.handler
-  name: ${self:provider.stage}-downloadSource
-  description: lambda that streams a data source from a URL to S3
+papermill_lambda:
+  handler: lambda_function.lambda_handler
+  module: papermill_lambda
+  name: papermill_lambda
+  description: lambda that loads, executes and saves outputs of jupyter notebooks to and from s3
   memorySize: 2048
-  timeout: 900
+  timeout: 60
   package:
     include:
-      - downloadSource/app.py
-      - downloadSource/lib/*
+      - papermill-lambda/lambda_function.py
   environment:
-    REGION: ${self:provider.region}
-    STAGE: ${self:provider.stage}
-    DESTINATION_BUCKET: ${self:custom.environment.DESTINATION_BUCKET}
-papermill-lambda:
-  handler: papermill-lambda/app.handler
-  name: ${self:provider.stage}-papermill-lambda
-  description: lambda executes Jupyter Notebooks
-  memorySize: 2048
-  timeout: 900
-  package:
-    include:
-      - papermill-lambda/app.py
-      - papermill-lambda/lib/*
-  environment:
-    REGION: ${self:provider.region}
-    STAGE: ${self:provider.stage}
-    DESTINATION_BUCKET: ${self:custom.environment.DESTINATION_BUCKET}
-  # alarms:
-  #   - functionAllFailures
-  #   - functionErrors
-  #   - name: functionDuration
-  #     threshold: 240000
+
