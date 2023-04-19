@@ -7,13 +7,7 @@
     "prd:destroy": "echo serverless remove --verbose --stage prd --region us-east-1 --aws-profile xentity",
     "stg:deploy": "serverless deploy --verbose --stage stg --region us-east-1 --aws-profile xentity",
     "stg:destroy": "serverless remove --verbose --stage stg --region us-east-1 --aws-profile xentity",
-    "local:downloadsource": "cd downloadSource && pipenv run python local.py --event events/test01.json",
-    "test:downloadsource": "serverless invoke local -f downloadSource -p downloadSource/events/test01.json",
-    "stg:test:downloadsource": "aws lambda invoke --function-name stg-downloadSource --cli-binary-format raw-in-base64-out --payload file://downloadSource/events/test01.json response.json --profile xentity",
-    "stg:test-async:downloadsource": "aws lambda invoke --function-name stg-downloadSource --cli-binary-format raw-in-base64-out --invocation-type Event --payload file://downloadSource/events/test05.json response.json --profile xentity",
-    "docker:build:downloadsource": "cd downloadSource && docker build -t downloadsource .",
-    "lint:all": "echo TODO",
-    "lint:downloadsource": "echo TODO"
+    "stg:deploy:papermill-lambda": "serverless deploy function -f papermill-lambda --verbose --stage stg --aws-profile xentity"
   },
   "author": "Xentity Corporation",
   "license": "UNLICENSED",
