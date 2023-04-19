@@ -1,0 +1,44 @@
+service: xentity-awsl-jupyter-notebooks
+frameworkVersion: ">=2.72.3"
+plugins:
+  - serverless-python-requirements
+provider:
+  name: aws
+  runtime: python3.9
+  lambdaHashingVersion: 20201221
+  stage: ${opt:stage, 'stg'}
+  region: ${opt:region, 'us-east-1'}
+  deploymentBucket:
+    name: ${self:custom.environment.DEPLOYMENT_BUCKET}
+    blockPublicAccess: true
+    maxPreviousDeploymentArtifacts: 3
+  stackName: ${self:provider.stage}-${self:service}
+  stackPolicy:
+    - Effect: Allow
+      Principal: "*"
+      Action: "Update:*"
+      Resource: "*"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "s3:PutObject"
+            - "s3:GetObject"
+            - "s3:ListAllMyBuckets"
+            - "secretsmanager:GetSecretValue"
+            - "lambda:InvokeFunction"
+          Resource: "*"
+package:
+  individually: true
+  exclude:
+    - '**/*'
+custom:
+  environment: ${file(./cm/environment.yml):${self:provider.stage}}
+  namespace: PapermillDemo
+  namespaceShort: PDemo
+  pythonRequirements:
+    dockerizePip: non-linux
+    invalidateCaches: true
+    slim: true
+functions: ${file(./cm/functions.yml)}

@@ -1,0 +1,11 @@
+dev:
+  DEPLOYMENT_BUCKET: xentity-deployment
+  DESTINATION_BUCKET: xentity-datalake-example
+
+stg:
+  DEPLOYMENT_BUCKET: xentity-deployment
+  DESTINATION_BUCKET: xentity-datalake-example
+
+prd:
+  DEPLOYMENT_BUCKET: xentity-deployment
+  DESTINATION_BUCKET: xentity-datalake-example
