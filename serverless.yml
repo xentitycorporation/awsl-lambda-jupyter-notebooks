@@ -2,6 +2,12 @@ service: xentity-awsl-jupyter-notebooks
 frameworkVersion: ">=2.72.3"
 plugins:
   - serverless-python-requirements
+layers:
+  Papermill:
+    path: ./layers/papermill
+    compatibleRuntimes:
+      - python3.8
+      - python3.9
 provider:
   name: aws
   runtime: python3.9
@@ -18,6 +24,8 @@ provider:
       Principal: "*"
       Action: "Update:*"
       Resource: "*"
+  layers:
+    - !Ref PapermillLambdaLayer
   iam:
     role:
       statements:
@@ -32,13 +40,12 @@ provider:
 package:
   individually: true
   exclude:
-    - '**/*'
+    - './*'
 custom:
   environment: ${file(./cm/environment.yml):${self:provider.stage}}
   namespace: PapermillDemo
   namespaceShort: PDemo
   pythonRequirements:
-    fileName: ${self:custom.environment.REQUIREMENTS_FILE}
     dockerizePip: non-linux
     invalidateCaches: true
     slim: true

@@ -5,6 +5,8 @@ pm_lambda:
   description: lambda that loads, executes and saves outputs of jupyter notebooks to and from s3
   memorySize: 2048
   timeout: 60
+  layers:
+    - !Ref PapermillLambdaLayer
   package:
     include:
       - papermill-lambda/lambda_function.py

@@ -16,26 +16,33 @@ If you have not done so already here are some links and instructions on the vari
 
 ## Serverless Framework
 - `npm i` to install the serverless drivers
-## Python
-- Download 3.x https://www.python.org/downloads/ and install
-- Install pipenv by running `pip install --user pipenv`. More details here: https://pipenv.pypa.io/en/latest/install/
 
-# Software Setup
-
-After you have cloned the repo run these various command to install any required drivers for development and deployment.
-
-- In the root folder of this project run `pipenv install` and this will install your virutalenv for python
-
-# Testing Locally
-- Go into the downloadSource folder and run `pipenv run python local.py --event events/test01.json`
-- A version of this has also been put in the package.json and can be run with `npm run local:downloadsource`
 # Deployment
 To deploy run the command `npm run stg:deploy` or `npm run prd:deploy` depending on the stage you are publishing.
 
-# Testing Cloud Version
-- Install `npm install -g cwtail` if you want to have an easy way to view CloudWatch events from the Lambda being invoked. More details at https://github.com/kennu/cwtail
-- Alternative tool can be installed at https://github.com/lucagrulla/cw (Not tested but more features)
-- Run `stg:test:downloadsource` and it should invoke your Cloud function with the event01.json file and print the output to response.json
+## Add a layer
 
-# References
-- https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/invoke.html
+These were the steps taken to create the papermill layer to deploy using the serverless framework
+
+- Within the `layers/` folder, run command `mkdir papermill`
+- `cd papermill`
+- `pip install ipykernel ipython jupyter papermill -t ./python`
+-  Once that has finished installing, go to `serverless.yml` and add under layers
+    ```yml
+    Papermill:
+        path: ./layers/papermill
+        compatibleRuntimes:
+        - python3.8
+        - python3.9
+    ```
+- add to provider
+    ```yml
+    layers:
+        - !Ref PapermillLambdaLayer
+    ```
+- add to function using papermill layer:
+    ```yml
+    layers:
+        - !Ref PapermillLambdaLayer
+    ```
+Change as needed if another layer needs to be added. Link to [Documentation](https://www.serverless.com/framework/docs/providers/aws/guide/layers)

@@ -1,5 +1,3 @@
 pandas
-papermill
-ipython
-jupyter
 numpy
+requests

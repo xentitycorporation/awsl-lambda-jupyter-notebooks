@@ -7,7 +7,7 @@
     "prd:destroy": "echo serverless remove --verbose --stage prd --region us-east-1 --aws-profile xentity",
     "stg:deploy": "serverless deploy --verbose --stage stg --region us-east-1 --aws-profile xentity",
     "stg:destroy": "serverless remove --verbose --stage stg --region us-east-1 --aws-profile xentity",
-    "stg:deploy:papermill-lambda": "serverless deploy function -f papermill-lambda --verbose --stage stg --aws-profile xentity"
+    "stg:deploy:papermill-lambda": "serverless deploy function -f pm_lambda --verbose --stage stg --aws-profile xentity"
   },
   "author": "Xentity Corporation",
   "license": "UNLICENSED",

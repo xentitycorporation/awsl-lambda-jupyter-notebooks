@@ -8,7 +8,7 @@ def main():
     """
     Main function
     """
-    path = 'papermill-lambda/events/event01.json'
+    path = './papermill-lambda/events/event02.json'
     with open(path, 'r', encoding='utf-8') as f:
         event = json.load(f)
     lambda_handler(event, None)
