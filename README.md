@@ -1,4 +1,4 @@
-# demo-serverless-python-lambda
+# Demo Jupyter Notebook Execution Lambda
 Serverless Framework Demo for a Python Lambda deployment that showcases how to organize, test, and deploy a project.
 
 # AWS Profile
