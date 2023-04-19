@@ -5,6 +5,7 @@ dev:
 stg:
   DEPLOYMENT_BUCKET: xentity-deployment
   DESTINATION_BUCKET: xentity-datalake-example
+  REQUIREMENTS_FILE: requirements.txt
 
 prd:
   DEPLOYMENT_BUCKET: xentity-deployment

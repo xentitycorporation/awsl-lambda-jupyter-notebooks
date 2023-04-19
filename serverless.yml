@@ -38,6 +38,7 @@ custom:
   namespace: PapermillDemo
   namespaceShort: PDemo
   pythonRequirements:
+    fileName: ${self:custom.environment.REQUIREMENTS_FILE}
     dockerizePip: non-linux
     invalidateCaches: true
     slim: true
