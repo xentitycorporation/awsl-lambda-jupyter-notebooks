@@ -1,0 +1,10 @@
+{
+    "key": "notebooks",
+    "notebook": "req_example.ipynb",
+    "bucket": "xentity-jupyter-notebooks",
+    "output_key": "output",
+    "output": "req_output.ipynb",
+    "params": {
+        "url": "https://restcountries.com/v3.1/alpha/840"
+    }
+}

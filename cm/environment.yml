@@ -5,6 +5,7 @@ dev:
 stg:
   DEPLOYMENT_BUCKET: xentity-deployment
   DESTINATION_BUCKET: xentity-datalake-example
+  PAPERMILL_LAYER: arn:aws:lambda:${self:provider.region}:${aws:accountId}:layer:papermill-layer:1
 
 prd:
   DEPLOYMENT_BUCKET: xentity-deployment

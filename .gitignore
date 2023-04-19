@@ -3,3 +3,4 @@
 .serverless
 response.json
 **/__pycache__
+layers/*
